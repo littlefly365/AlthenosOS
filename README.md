@@ -27,11 +27,11 @@ I-nspired by mature systems: Maestro OS, Linux Kernel, and NetBSD.
 
 To compile AlthenosOS, you need:
 
-nasm
-xorriso
-mtools
-gcc (with -m32 support)
-ld / binutils-i386
+●nasm
+●xorriso
+●mtools
+●gcc (with -m32 support)
+●ld / binutils-i386
 
 # Generating the ISO
 make clean and make
@@ -73,8 +73,11 @@ FHS-like filesystem layout with symbolic links:
 
 
 /bin     → /usr/bin
+
 /sbin    → /usr/sbin
+
 /lib     → /usr/lib
+
 /usr/bin
 /usr/sbin
 /usr/lib
