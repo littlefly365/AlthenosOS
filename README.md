@@ -21,16 +21,20 @@ Internal shell with essential commands and f-uture support for external UNIX-lik
 
 -User space organized according to FHS, with symbolic links for binaries and libraries.
 
-I-nspired by mature systems: Maestro OS, Linux Kernel, and NetBSD.
+-Inspired by mature systems: Maestro OS, Linux Kernel, and NetBSD.
 
 # Dependencies
 
 To compile AlthenosOS, you need:
 
 ●nasm
+
 ●xorriso
+
 ●mtools
+
 ●gcc (with -m32 support)
+
 ●ld / binutils-i386
 
 # Generating the ISO
