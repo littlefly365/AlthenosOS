@@ -1,9 +1,9 @@
-#AlthenosOS
+# AlthenosOS
 
 AlthenosOS is an experimental 32-bit operating system, based on Primus-OS, written from scratch in C and x86 Assembly, with an educational, modular, and extensible approach.
 Its goal is to provide a foundation for experimenting with kernels, bootloaders, memory management, file systems, and low-level tools, gradually adopting a more UNIX and BSD-like style.
 
-#Main Features
+# Main Features
 
 -Monolithic 32-bit x86 kernel, freestanding.
 
@@ -23,7 +23,7 @@ Internal shell with essential commands and f-uture support for external UNIX-lik
 
 I-nspired by mature systems: Maestro OS, Linux Kernel, and NetBSD.
 
-#Dependencies
+# Dependencies
 
 To compile AlthenosOS, you need:
 
@@ -33,31 +33,15 @@ mtools
 gcc (with -m32 support)
 ld / binutils-i386
 
-#Generating the ISO
+# Generating the ISO
 make clean and make
 (if you want you can change the options in the Makefile and build scripts for your preferences)
 
-#Testing with QEMU
+# Testing with QEMU
 
 qemu-system-i386 -cdrom althenos-os.iso --enable-kvm or run the run.sh script
 
-
-#Project Structure(in the future)
-
-AlthenosOS/
-├── boot/          # bootloader (ASM)
-├── arch/x86/      # x86-specific code
-├── kernel/        # kernel
-├── drivers/       # VGA, keyboard, PIT, etc.
-├── lib/           # C utilities
-├── fs/            # VFS and future filesystem drivers
-├── init/          # kernel initialization
-├── scripts/       # auxiliary scripts
-├── Makefile
-└── README.md
-
-
-#License, Style, and Fork Vision
+# License, Style, and Fork Vision
 
 For certain reasons, the project will temporarily be licensed under GPL v3, since the original project it is based on, Primus-OS, is under that license.
 
@@ -72,7 +56,7 @@ Large parts of the code were restructured to adapt the architecture and style to
 Broken components like the clock, date, and datetime commands were corrected.
 
 
-#UNIX-style Approach and Roadmap
+# UNIX-style Approach and Roadmap
 
 AlthenosOS aims to adopt a more UNIX-like style, including:
 
@@ -98,7 +82,7 @@ FHS-like filesystem layout with symbolic links:
 This structure separates essential binaries, libraries, and user tools, creating a coherent and expandable user space.
 
 
-#Future Transition to 64-bit and UEFI
+# Future Transition to 64-bit and UEFI
 
 AlthenosOS is planned to transition to 64-bit, bringing:
 
@@ -108,7 +92,7 @@ Better memory addressing and larger user space support.
 
 Compatibility with modern graphics modes beyond VGA.
 
-#Inspiration and Reference
+# Inspiration and Reference
 
 During development, AlthenosOS takes inspiration from mature projects:
 
@@ -119,7 +103,7 @@ During development, AlthenosOS takes inspiration from mature projects:
 [NetBSD](https://github.com/NetBSD/src)
 
 
-#Planned Future Improvements
+# Planned Future Improvements
 
 Remove GNU dependencies and migrate to BSD-style tools (bsdmake, NetBSD-like scripts).
 
@@ -140,7 +124,7 @@ Expand math and linear algebra libraries.
 Support simple games (tic-tac-toe, snake) and additional VGA graphics modes.
 
 
-#TODO
+# TODO
 
 Unit testing framework for internal modules.
 
