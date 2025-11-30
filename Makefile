@@ -3,6 +3,7 @@ AS=as
 GCCPARAMS = -m32 -nostdlib -fno-builtin -fno-exceptions -ffreestanding -fno-leading-underscore -Wall -Wextra -Wpedantic
 ASPARAMS = --32
 LDPARAMS = -melf_i386
+VERSION= 0.0.1
 
 SRC_DIR=src
 HDR_DIR=include/
@@ -34,7 +35,6 @@ primus-os.bin: $(SRC_DIR)/linker.ld $(OBJ_FILES1) $(OBJ_FILES2) $(OBJ_FILES3)
 	ld $(LDPARAMS) -T $< -o $@ $(OBJ_DIR)/*.o
 
 primus-os.iso: primus-os.bin
-	./update_version
 	mkdir iso
 	mkdir iso/boot
 	mkdir iso/boot/grub
@@ -42,11 +42,11 @@ primus-os.iso: primus-os.bin
 	echo 'set timeout=0'                      > iso/boot/grub/grub.cfg
 	echo 'set default=0'                     >> iso/boot/grub/grub.cfg
 	echo ''                                  >> iso/boot/grub/grub.cfg
-	echo 'menuentry "PrimusOS" {'            >> iso/boot/grub/grub.cfg
+	echo 'menuentry "Althenos-OS-$(VERSION)" {'            >> iso/boot/grub/grub.cfg
 	echo '  multiboot /boot/primus-os.bin'   >> iso/boot/grub/grub.cfg
 	echo '  boot'                            >> iso/boot/grub/grub.cfg
 	echo '}'                                 >> iso/boot/grub/grub.cfg
-	grub-mkrescue --output=primus-os.iso iso
+	grub-mkrescue --output=primus-os-$(VERSION).iso iso
 	rm -rf iso
 
 install: primus-os.bin
