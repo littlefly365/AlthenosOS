@@ -10,7 +10,7 @@ static uint16_t *const VGA_MEMORY = (uint16_t *)0xb8000;
 uint8_t terminal_color;
 uint16_t *terminal_buffer;
 
-enum vga_color default_font_color = COLOR_LIGHT_GREY;
+enum vga_color default_font_color = COLOR_LIGHT_BLUE;
 #define BUFFER_SIZE 1024
 
 static inline uint8_t make_color(enum vga_color fg, enum vga_color bg)

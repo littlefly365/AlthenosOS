@@ -17,7 +17,7 @@ loader:
     mov $kernel_stack, %esp
     push %eax
     push %ebx
-    call main
+    call kmain
 
 
 _stop:

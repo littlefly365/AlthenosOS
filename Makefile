@@ -43,4 +43,4 @@ bzImage: $(SRC_DIR)/linker.ld $(OBJ_FILES1) $(OBJ_FILES2) # $(OBJ_FILES3)
 clean:
 	rm -rf AlthenosOS-$(VERSION).iso bzImage $(OBJ_DIR) iso
 run:
-	qemu-system-i386 -cdrom primus-os-$(VERSION).iso --enable-kvm
+	qemu-system-i386 -cdrom AlthenosOS-$(VERSION).iso --enable-kvm

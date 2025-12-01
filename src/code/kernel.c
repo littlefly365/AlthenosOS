@@ -27,7 +27,7 @@ uint8_t scrolllock = false;
 uint8_t shift = false;
 char current_version[7];
 
-int main(void)
+int kmain(void)
 {
 	char buffer[BUFFER_SIZE];
 	char *string;
@@ -36,13 +36,11 @@ int main(void)
 	node_t *head = NULL;
 
 	terminal_initialize(default_font_color, COLOR_BLACK);
-	terminal_set_colors(COLOR_LIGHT_GREEN, COLOR_BLACK);
+	terminal_set_colors(COLOR_LIGHT_BLUE, COLOR_BLACK);
 	sprintf(current_version, "%u.%u.%u", V1, V2, V3 + 1);
-	print_logo();
+//	print_logo();
 	about(current_version);
 	printk("\n\tType \"help\" for a list of commands.\n\n");
-	// printf("\tCurrent datetime: ");
-	// datetime();
 	printk("\n\tWelcome!\n\n");
 
 	terminal_set_colors(default_font_color, COLOR_BLACK);
@@ -244,6 +242,10 @@ int main(void)
 				else if (strlen(buffer) > 0 && strcmp(buffer, "about") == 0)
 				{
 					about(current_version);
+				}
+				else if (strlen(buffer) > 0 && strcmp(buffer, "fastfetch") == 0)
+				{
+					print_logo();
 				}
 				else if (strlen(buffer) > 0 && strcmp(buffer, "fontcolor") == 0)
 				{
