@@ -1,6 +1,7 @@
 <p align="center">
   <img src=screenshot.png>
-</p>p>
+</p>
+
 # AlthenosOS
 
 AlthenosOS is an experimental 32-bit operating system, based on Primus-OS, written from scratch in C and x86 Assembly, with an educational, modular, and extensible approach.
