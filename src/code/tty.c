@@ -10,6 +10,7 @@ static uint16_t *const VGA_MEMORY = (uint16_t *)0xb8000;
 uint8_t terminal_color;
 uint16_t *terminal_buffer;
 
+enum vga_color default_font_color = COLOR_LIGHT_GREY;
 #define BUFFER_SIZE 1024
 
 static inline uint8_t make_color(enum vga_color fg, enum vga_color bg)
@@ -44,11 +45,11 @@ void terminal_initialize(enum vga_color font_color, enum vga_color background_co
 
 void terminal_scroll()
 {
-    int i;
-    for (i = 0; i < VGA_HEIGHT; i++)
+    //int i;
+    for (int i = 0; i < VGA_HEIGHT; i++)
     {
-        int m;
-        for (m = 0; m < VGA_WIDTH; m++)
+        //int m;
+        for (int m = 0; m < VGA_WIDTH; m++)
         {
             terminal_buffer[i * VGA_WIDTH + m] = terminal_buffer[(i + 1) * VGA_WIDTH + m];
         }

@@ -128,11 +128,6 @@ int isspace(char c)
     return (c == ' ' || c == '\t' || c == '\n' || c == '\12');
 }
 
-int isdigit(char c)
-{
-    return (c >= '0' && c <= '9');
-}
-
 char *ltrim(char *s)
 {
     while (isspace(*s))
@@ -174,7 +169,7 @@ char *tolower(char *string)
     return string;
 }
 
-static char *sitoa(char *buf, uint32_t num, int width, enum flag_itoa flags)
+char *sitoa(char *buf, uint32_t num, int width, enum flag_itoa flags)
 {
     uint32_t base;
     if (flags & BASE_2)
