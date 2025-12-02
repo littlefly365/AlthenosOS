@@ -4,6 +4,7 @@ CFLAGS = -fno-stack-protector -m32 -nostdlib -fno-builtin -fno-exceptions -ffree
 ASFLAGS = --32
 LDFLAGS = -melf_i386
 VERSION=0.0.1
+MAKEFLAGS= -j$(nproc)
 
 SRC_DIR=src
 INCLUDE_DIR=include
