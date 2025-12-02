@@ -1,46 +1,68 @@
 CC=gcc
 AS=as
-GCCPARAMS = -fno-stack-protector -m32 -nostdlib -fno-builtin -fno-exceptions -ffreestanding -fno-leading-underscore -Wall -Wextra -Wpedantic
-ASPARAMS = --32
-LDPARAMS = -melf_i386
-VERSION= 0.0.1
+CFLAGS = -fno-stack-protector -m32 -nostdlib -fno-builtin -fno-exceptions -ffreestanding -fno-leading-underscore -Wall -Wextra -Wpedantic
+ASFLAGS = --32
+LDFLAGS = -melf_i386
+VERSION=0.0.1
 
-SRC_DIR=src/code
-HDR_DIR=src/include/
-OBJ_DIR=build
+SRC_DIR=src
+INCLUDE_DIR=include
+BUILD_DIR=build
 ISO_DIR=iso
 
-SRC_FILES1=$(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES1=$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES1))
-SRC_FILES2=$(wildcard $(SRC_DIR)/*.s)
-OBJ_FILES2=$(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(SRC_FILES2))
+# Fuentes
+SRC_DRIVERS=$(wildcard $(SRC_DIR)/drivers/*.c)
+SRC_SHELL=$(wildcard $(SRC_DIR)/shell/*.c)
+SRC_KERNEL=$(wildcard $(SRC_DIR)/kernel/i386/*.c)
+SRC_BOOT=$(wildcard $(SRC_DIR)/boot/*.s)
 
-all: bzImage
-	mkdir iso
-	mkdir iso/boot
-	mkdir iso/boot/grub
-	cp    bzImage iso/boot/bzImage
-	echo 'set timeout=0'                      > iso/boot/grub/grub.cfg
-	echo 'set default=0'                     >> iso/boot/grub/grub.cfg
-	echo ''                                  >> iso/boot/grub/grub.cfg
-	echo 'menuentry "Althenos-OS-$(VERSION)" {'            >> iso/boot/grub/grub.cfg
-	echo '  multiboot /boot/bzImage'   >> iso/boot/grub/grub.cfg
-	echo '  boot'                            >> iso/boot/grub/grub.cfg
-	echo '}'                                 >> iso/boot/grub/grub.cfg
-	grub-mkrescue --output=AlthenosOS-$(VERSION).iso iso
-	rm -rf iso
+# Objetos
+OBJ_DRIVERS=$(patsubst $(SRC_DIR)/drivers/%.c,$(BUILD_DIR)/drivers/%.o,$(SRC_DRIVERS))
+OBJ_SHELL=$(patsubst $(SRC_DIR)/shell/%.c,$(BUILD_DIR)/shell/%.o,$(SRC_SHELL))
+OBJ_KERNEL=$(patsubst $(SRC_DIR)/kernel/i386/%.c,$(BUILD_DIR)/kernel/%.o,$(SRC_KERNEL))
+OBJ_BOOT=$(patsubst $(SRC_DIR)/boot/%.s,$(BUILD_DIR)/boot/%.o,$(SRC_BOOT))
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(OBJ_DIR)
-	$(CC) $(GCCPARAMS) $^ -I$(HDR_DIR) -c -o $@
+all: bzImage iso
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
-	$(AS) $(ASPARAMS) -o $@ $<
+# Crear ISO
+iso: bzImage
+	mkdir -p $(ISO_DIR)/boot/grub
+	cp bzImage $(ISO_DIR)/boot/bzImage
+	echo 'set timeout=0'                      > $(ISO_DIR)/boot/grub/grub.cfg
+	echo 'set default=0'                     >> $(ISO_DIR)/boot/grub/grub.cfg
+	echo ''                                  >> $(ISO_DIR)/boot/grub/grub.cfg
+	echo 'menuentry "Althenos-OS-$(VERSION)" {' >> $(ISO_DIR)/boot/grub/grub.cfg
+	echo '  multiboot /boot/bzImage'         >> $(ISO_DIR)/boot/grub/grub.cfg
+	echo '  boot'                             >> $(ISO_DIR)/boot/grub/grub.cfg
+	echo '}'                                 >> $(ISO_DIR)/boot/grub/grub.cfg
+	grub-mkrescue --output=AlthenosOS-$(VERSION).iso $(ISO_DIR)
+	rm -rf $(ISO_DIR)
 
-bzImage: $(SRC_DIR)/linker.ld $(OBJ_FILES1) $(OBJ_FILES2) # $(OBJ_FILES3)
-	ld $(LDPARAMS) -T $< -o $@ $(OBJ_DIR)/*.o
+# Compilación de objetos
+$(BUILD_DIR)/drivers/%.o: $(SRC_DIR)/drivers/%.c
+	mkdir -p $(BUILD_DIR)/drivers
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 
+$(BUILD_DIR)/shell/%.o: $(SRC_DIR)/shell/%.c
+	mkdir -p $(BUILD_DIR)/shell
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+
+$(BUILD_DIR)/kernel/%.o: $(SRC_DIR)/kernel/i386/%.c
+	mkdir -p $(BUILD_DIR)/kernel
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+
+$(BUILD_DIR)/boot/%.o: $(SRC_DIR)/boot/%.s
+	mkdir -p $(BUILD_DIR)/boot
+	$(AS) $(ASFLAGS) -o $@ $<
+
+# Enlazado
+bzImage: $(OBJ_DRIVERS) $(OBJ_SHELL) $(OBJ_KERNEL) $(OBJ_BOOT) $(SRC_DIR)/linker.ld
+	ld $(LDFLAGS) -T $(SRC_DIR)/linker.ld -o bzImage $(OBJ_DRIVERS) $(OBJ_SHELL) $(OBJ_KERNEL) $(OBJ_BOOT)
+
+# Limpieza
 clean:
-	rm -rf AlthenosOS-$(VERSION).iso bzImage $(OBJ_DIR) iso
-run:
+	rm -rf AlthenosOS-$(VERSION).iso bzImage $(BUILD_DIR) $(ISO_DIR)
+
+# Ejecutar en QEMU
+run: all
 	qemu-system-i386 -cdrom AlthenosOS-$(VERSION).iso --enable-kvm
