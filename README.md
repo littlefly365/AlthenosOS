@@ -92,24 +92,24 @@
     </thead>
     <tbody>
       <tr><td>Clean and reorganize code for future versions</td><td>📅 En progreso</td></tr>
-      <tr><td>Reorganize shell and UNIX-style commands (search PATH)</td><td>📅 En progreso</td></tr>
-      <tr><td>Separate user space and add exclusive root space</td><td>📅 En progreso</td></tr>
-      <tr><td>Unify kernel (memory and critical functions)</td><td>📅 En progreso</td></tr>
-      <tr><td>Rewrite critical parts using other languages (Rust, C, C++, Assembly, Python, Lumra, Shell)</td><td>📅 En progreso</td></tr>
-      <tr><td>Add UNIX FHS and potential improvements</td><td>📅 En progreso</td></tr>
-      <tr><td>Syscall system for project portability</td><td>📅 En progreso</td></tr>
-      <tr><td>Stable UNIX-style commands (BSD ports or own)</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Support popular filesystems (FAT32, EXT2/3/4, swap, disks)</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Full UEFI support</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Legacy and UEFI boot on real machine</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Network drivers</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Graphical server TXX (Wayland/Xorg alternative)</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Add basic DE and WM (LXQt, XFCE4 or from scratch)</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Tools: linker, C compiler, C library, LLVM/binutils/GCC</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Self-compilable system</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Separate kernel from OS (update individually)</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Custom bootloader (BSD/Minix style)</td><td>⛔️ No realizado</td></tr>
-      <tr><td>Remove all GNU tools from AlthenosOS</td><td>⛔️ No realizado</td></tr>
+      <tr><td>Reorganize shell and UNIX-style commands (search PATH)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Separate user space and add exclusive root space</td><td>⛔️ Not done</td></tr>
+      <tr><td>Unify kernel (memory and critical functions)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Rewrite critical parts using other languages (Rust, C, C++, Assembly, Python, Lumra, Shell)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Add UNIX FHS and potential improvements</td><td>⛔️ Not done</td></tr>
+      <tr><td>Syscall system for project portability</td><td>⛔️ Not done</td></tr>
+      <tr><td>Stable UNIX-style commands (BSD ports or own)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Support popular filesystems (FAT32, EXT2/3/4, swap, disks)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Full UEFI support</td><td>⛔️ Not done </td></tr>
+      <tr><td>Legacy and UEFI boot on real machine</td><td>⛔️ Not done</td></tr>
+      <tr><td>Network drivers</td><td>⛔️ Not done</td></tr>
+      <tr><td>Graphical server TXX (Wayland/Xorg alternative)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Add basic DE and WM (LXQt, XFCE4 or from scratch)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Tools: linker, C compiler, C library, LLVM/binutils/GCC</td><td>⛔️ Not done</td></tr>
+      <tr><td>Self-compilable system</td><td>⛔️ Not done</td></tr>
+      <tr><td>Separate kernel from OS (update individually)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Custom bootloader (BSD/Minix style)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Remove all GNU tools from AlthenosOS</td><td>⛔️ Not done</td></tr>
       <tr><td>Rewrite Primus-OS code for GPL → BSD migration</td><td>📅 En progreso</td></tr>
     </tbody>
   </table>
