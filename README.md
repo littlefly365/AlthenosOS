@@ -1,88 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>AlthenosOS</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-      background-color: #fafafa;
-    }
-    h1, h2, h3 {
-      color: #2c3e50;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    img {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
-    code {
-      background: #f4f4f4;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
-    }
-    pre {
-      background: #f4f4f4;
-      padding: 12px;
-      border-radius: 6px;
-      overflow-x: auto;
-      margin: 10px 0;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin: 20px 0;
-    }
-    table th, table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    table th {
-      background-color: #2c3e50;
-      color: white;
-    }
-    ul {
-      list-style-type: disc;
-      margin-left: 20px;
-    }
-    hr {
-      margin: 40px 0;
-      border: 0;
-      border-top: 1px solid #ddd;
-    }
-    a {
-      color: #2980b9;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
+<p align="center">
+  <img src="screenshot.png" alt="AlthenosOS Screenshot" width="600"/>
+</p>
 
-  <h1>AlthenosOS</h1>
-  <img src="screenshot.png" alt="AlthenosOS Screenshot">
+# AlthenosOS
 
-  <p>
-    <strong>AlthenosOS</strong> is an experimental <strong>32-bit operating system</strong> based on Primus-OS, written from scratch in <strong>C and x86 Assembly</strong>, designed with an <strong>educational, modular, and extensible approach</strong>.
-    It aims to provide a strong foundation for experimenting with kernels, bootloaders, memory management, file systems, and low-level tools, gradually adopting a more UNIX and BSD-like style.
-  </p>
+**AlthenosOS** is an experimental **32-bit operating system** based on Primus-OS, written from scratch in **C and x86 Assembly**, designed with an **educational, modular, and extensible approach**.
 
-  <hr>
+It aims to provide a strong foundation for experimenting with **kernels, bootloaders, memory management, file systems, and low-level tools**, gradually adopting a more **UNIX and BSD-like style**.
+
+---
+
+## 🌟 Main Features
+
+- Monolithic 32-bit x86 kernel, freestanding
+- GRUB bootloader compatible with BIOS and multiboot
+- Basic drivers: text VGA, PS/2 keyboard, PIT, PIC
+- Interrupt system (IDT + IRQ + exceptions)
+- Basic memory manager (paging + dynamic heap)
+- Internal shell with essential commands and future support for external UNIX-like commands
+- Modular architecture with restructured code for easy learning
+- User space organized according to **FHS**, with symbolic links for binaries and libraries
+- Inspired by mature systems: Maestro OS, Linux Kernel, and NetBSD
+
+---
+
+## 🛠 Dependencies
+
+To compile AlthenosOS, you need:
+
+- `nasm`
+- `xorriso`
+- `mtools`
+- `gcc` (with `-m32` support)
+- `ld / binutils-i386`
+
+---
+
+## 💿 Generating the ISO
+
+```bash
+make clean && make
 
   <h2>🌟 Main Features</h2>
   <ul>
