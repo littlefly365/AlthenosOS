@@ -1,20 +1,19 @@
 #include "../include/io.h"
 #include "../include/tty.h"
 
-void shutdown()
+void shutdown(void)
 {
     outw(0xB004, 0x2000);
     outw(0x604, 0x2000);
     outw(0x4004, 0x3400);
 }
 
-void reboot()
+void reboot(void)
 {
     uint8_t temp;
 
-    asm volatile("cli"); /* disable all interrupts */
+    __asm__ volatile("cli");
 
-    /* Clear all keyboard buffers (output and command buffers) */
     do
     {
         temp = input_bytes(KBRD_INTRFC); /* empty user data */
@@ -24,7 +23,7 @@ void reboot()
 
     output_bytes(KBRD_INTRFC, KBRD_RESET); /* pulse CPU reset line */
 loop:
-    asm volatile("hlt"); /* if that didn't work, halt the CPU */
+    __asm__ volatile("hlt"); /* if that didn't work, halt the CPU */
     goto loop;           /* if a NMI is received, halt again */
 }
 
@@ -32,7 +31,7 @@ uint8_t input_bytes(uint16_t port)
 {
     uint8_t ret;
     __asm__ __volatile__("inb %1, %0"
-                         : "= a"(ret)
+                         : "=a"(ret)
                          : "Nd"(port));
     return ret;
 }
@@ -48,7 +47,7 @@ uint8_t inw(uint16_t port)
 {
     uint8_t ret;
     __asm__ __volatile__("in %1, %0"
-                         : "= a"(ret)
+                         : "=a"(ret)
                          : "d"(port));
     return ret;
 }

@@ -125,7 +125,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "exp(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "exp(");
         parser += strlen("exp(");
@@ -145,7 +145,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "ln(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "ln(");
         parser += strlen("ln(");
@@ -165,7 +165,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "log10(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "log10(");
         parser += strlen("log10(");
@@ -185,7 +185,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "sqrt(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "sqrt(");
         parser += strlen("sqrt(");
@@ -205,7 +205,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "abs(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "abs(");
         parser += strlen("abs(");
@@ -225,7 +225,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "asinh(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "asinh(");
         parser += strlen("asinh(");
@@ -245,7 +245,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "acosh(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "acosh(");
         parser += strlen("acosh(");
@@ -265,7 +265,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "atanh(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "atanh(");
         parser += strlen("atanh(");
@@ -285,7 +285,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "asin(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "asin(");
         parser += strlen("asin(");
@@ -305,7 +305,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "acos(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "acos(");
         parser += strlen("acos(");
@@ -325,7 +325,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "atan(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "atan(");
         parser += strlen("atan(");
@@ -345,7 +345,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "sin(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "sin(");
         parser += strlen("sin(");
@@ -365,7 +365,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "cos(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "cos(");
         parser += strlen("cos(");
@@ -385,7 +385,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "tan(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "tan(");
         parser += strlen("tan(");
@@ -405,7 +405,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "sinh(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "sinh(");
         parser += strlen("sinh(");
@@ -425,7 +425,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "cosh(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "cosh(");
         parser += strlen("cosh(");
@@ -445,7 +445,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "tanh(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         parser = strstr(buffer, "tanh(");
         parser += strlen("tanh(");
@@ -465,7 +465,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "pow(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         double n;
         parser = strstr(buffer, "pow(");
@@ -492,7 +492,7 @@ void math_shell(char *buffer)
     else if (strlen(buffer) > 0 && strstr(buffer, "log(") != NULL)
     {
         char *parser;
-        char *buff;
+        char *buff = NULL;
         double num;
         double n;
         parser = strstr(buffer, "log(");
@@ -523,7 +523,7 @@ void math_shell(char *buffer)
     }
     else if (strlen(buffer) > 0 && strcmp(buffer, "rand()") == 0)
     {
-        char *buff;
+        char *buff = NULL;
         printk("\n");
         printk(ftoa(buff, rand(), 6));
     }

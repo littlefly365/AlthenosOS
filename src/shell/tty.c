@@ -43,13 +43,13 @@ void terminal_initialize(enum vga_color font_color, enum vga_color background_co
     }
 }
 
-void terminal_scroll()
+void terminal_scroll(void)
 {
-    //int i;
-    for (int i = 0; i < VGA_HEIGHT; i++)
+    unsigned int i;
+    for (i = 0; i < VGA_HEIGHT; i++)
     {
         //int m;
-        for (int m = 0; m < VGA_WIDTH; m++)
+        for (unsigned int m = 0; m < VGA_WIDTH; m++)
         {
             terminal_buffer[i * VGA_WIDTH + m] = terminal_buffer[(i + 1) * VGA_WIDTH + m];
         }
@@ -112,8 +112,8 @@ int putchar(int ic)
 
 void term_putc(char c, enum vga_color char_color)
 {
-    unsigned int i = 0; // place holder for text string position
-    unsigned int j = 0; // place holder for video buffer position
+  //  unsigned int i = 0; // place holder for text string position
+  //  unsigned int j = 0; // place holder for video buffer position
 
     int index;
     // Remember - we don't want to display ALL characters!
@@ -251,7 +251,6 @@ static void ftoa_fixed(char *buffer, double value)
 void ftoa_sci(char *buffer, double value)
 {
     int exponent = 0;
-    int places = 0;
     static const int width = 4;
 
     if (value == 0.0)
@@ -326,28 +325,28 @@ int printk(const char *format, ...)
         else if (*format == 'd')
         {
             format++;
-            char *s;
+            char *s = 0;
             itoa(s, va_arg(parameters, int), 10);
             print(s, strlen(s));
         }
         else if (*format == 'f')
         {
             format++;
-            char *s;
+            char *s = 0;
             ftoa_fixed(s, va_arg(parameters, double));
             print(s, strlen(s));
         }
         else if (*format == 'e')
         {
             format++;
-            char *s;
+            char *s = 0;
             ftoa_sci(s, va_arg(parameters, double));
             print(s, strlen(s));
         }
         else if (*format == 'x')
         {
             format++;
-            char *s;
+            char *s = 0;
             itoa(s, va_arg(parameters, unsigned int), 16);
             print("0x", 2);
             print(s, strlen(s));
@@ -355,7 +354,7 @@ int printk(const char *format, ...)
         else if (*format == 'p')
         {
             format++;
-            char *s;
+            char *s = 0;
             const void *ptr = va_arg(parameters, void *);
             uintptr_t uptr = (uintptr_t)ptr;
             itoa(s, uptr, 16);
@@ -403,7 +402,7 @@ void terminal_set_colors(enum vga_color font_color, enum vga_color background_co
     // }
 }
 
-void print_color_options()
+void print_color_options(void)
 {
     printk("\nPlease select a font color. Valid options are:\n");
     terminal_set_colors(COLOR_BLUE, COLOR_BLACK);
@@ -440,7 +439,7 @@ void print_color_options()
     print_prompt();
 }
 
-enum vga_color change_font_color()
+enum vga_color change_font_color(void)
 {
     enum vga_color font_color;
     char buffer[BUFFER_SIZE];
@@ -454,7 +453,7 @@ enum vga_color change_font_color()
 
     while (true)
     {
-        while (byte = scan())
+        while ((byte = scan()))
         {
             if (byte == ENTER)
             {
@@ -542,7 +541,7 @@ enum vga_color change_font_color()
             }
             else
             {
-                char *s;
+                char *s = NULL;
                 char c = normalmap[byte];
                 s = ctos(s, c);
                 printk("%s", s);

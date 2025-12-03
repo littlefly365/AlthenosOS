@@ -25,10 +25,9 @@
 
   <h2>🛠 Dependencies</h2>
   <ul>
-    <li>nasm</li>
     <li>xorriso</li>
     <li>mtools</li>
-    <li>gcc (with -m32 support)</li>
+    <li>clang(or gcc with -m32 support</li>
     <li>ld / binutils-i386</li>
   </ul>
 

@@ -36,12 +36,12 @@ void sha256(char *message)
         0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
         0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
-    int i, j = 0;
-    unsigned char aux[SIZE][4];
+   int j = 0;
+  //  unsigned char aux[SIZE][4];
     uint32_t WORD[SIZE];
     uint32_t w[SIZE];
 
-    for (i = 0; i < SIZE; i++)
+    for (int i = 0; i < SIZE; i++)
     {
         WORD[i] = 0;
     }
@@ -56,24 +56,24 @@ void sha256(char *message)
     // Step 2 - pad data with zeros
 
     // Step 3 - append a single bit
-    WORD[j] = 0b10000000;
+    WORD[j] = 0x80;
 
     // Step 4 - append length of message at the end
     WORD[SIZE - 1] = strlen(message) * sizeof(char) * 8;
 
     // Step 5 - Copy data from step 1 into new array with 32-bits words
-    for (i = 0; i < SIZE; i++)
+    for (int i = 0; i < SIZE; i++)
     {
         w[i] = concatenate_bits(WORD[4 * i], WORD[4 * i + 1], WORD[4 * i + 2], WORD[4 * i + 3]);
     }
 
-    for (i = 16; i < SIZE; i++)
+    for (int i = 16; i < SIZE; i++)
     {
         w[i] = 0;
     }
 
     // Step 6 - Modify the zero-ed indexes at the end of the array
-    for (i = SIZE / 4; i < SIZE; i++)
+    for (int i = SIZE / 4; i < SIZE; i++)
     {
         uint32_t s0, s1;
         s0 = _rotr(w[i - 15], 7) ^ _rotr(w[i - 15], 18) ^ (w[i - 15] >> 3);
@@ -91,7 +91,7 @@ void sha256(char *message)
     uint32_t g = h6;
     uint32_t h = h7;
 
-    for (i = 0; i < SIZE; i++)
+    for (int i = 0; i < SIZE; i++)
     {
         uint32_t S0, S1, temp1, temp2, ch, maj;
 
@@ -122,7 +122,7 @@ void sha256(char *message)
     h7 = (h7 + h) % _2E32;
 
     // Final step - concatenate
-    unsigned char digest[256];
+    char digest[256];
     sprintf(digest, "%x%x%x%x%x%x%x%x", h0, h1, h2, h3, h4, h5, h6, h7);
     printk("\n%s", digest);
 }

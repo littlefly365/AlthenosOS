@@ -3,16 +3,16 @@
 
 #include "stdint.h"
 
-uint8_t get_update_in_progress_flag();
+uint8_t get_update_in_progress_flag(void);
 uint32_t get_RTC_register(uint8_t reg);
-void datetime();
-void date();
-void clock();
-uint32_t current_seconds();
-uint32_t current_minutes();
-uint32_t current_hour();
-uint32_t current_day();
-uint32_t current_month();
-uint32_t current_year();
+void datetime(void);
+void date(void);
+void clock(void);
+uint32_t current_seconds(void);
+uint32_t current_minutes(void);
+uint32_t current_hour(void);
+uint32_t current_day(void);
+uint32_t current_month(void);
+uint32_t current_year(void);
 
 #endif

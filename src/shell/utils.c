@@ -1,7 +1,7 @@
 #include "../include/utils.h"
 #include "../include/tty.h"
 
-void print_logo()
+void print_logo(void)
 {
 printk("\n                   `-/oshdmNMNdhyo+:-`       root@althenosOS\n");
 printk(" /s+:-``    `.-:+oydNMMMMNhs/-``             --------------\n");

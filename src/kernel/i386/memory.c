@@ -1,6 +1,6 @@
 #include "../include/memory.h"
 #include "../include/string.h"
-#include "../include/tty.h"
+#include "../../../include/tty.h"
 
 void memcpy(void *dest, void *src, size_t n)
 {
@@ -9,14 +9,12 @@ void memcpy(void *dest, void *src, size_t n)
     char *cdest = (char *)dest;
 
     // Copy contents of src[] to dest[]
-    for (int i = 0; i < n; i++)
+    for (unsigned int i = 0; i < n; i++)
         cdest[i] = csrc[i];
 }
 
-void heap_init()
+void heap_init(void)
 {
-    printk("\nInitializing heap ...");
-
     int total_table_entries = HEAP_SIZE_BYTES / HEAP_BLOCK_SIZE;
     kernel_heap_table.entries = (HEAP_BLOCK_TABLE_ENTRY *)HEAP_TABLE_ADRESS;
     kernel_heap_table.total = total_table_entries;
@@ -27,8 +25,6 @@ void heap_init()
     {
         printk("\nKernel panic: Failed to create heap");
     }
-
-    printk("\nHeap initialized.");
 }
 
 static int heap_validate_alignment(void *ptr)
@@ -40,7 +36,7 @@ static int heap_validate_table(void *ptr, void *end, struct heap_table *table)
 {
     int res = true;
 
-    size_t table_size = (size_t)(end - ptr);
+    size_t table_size = (char*)end - (char*)ptr;
     size_t total_blocks = table_size / HEAP_BLOCK_SIZE;
 
     if (table->total != total_blocks)
@@ -101,7 +97,7 @@ static int heap_get_entry_type(HEAP_BLOCK_TABLE_ENTRY entry)
 int heap_get_start_block(struct heap *heap, uint32_t total_blocks)
 {
     struct heap_table *table = heap->table;
-    int bc = 0;
+    unsigned int bc = 0;
     int bs = -1;
     size_t i;
 
@@ -134,7 +130,8 @@ int heap_get_start_block(struct heap *heap, uint32_t total_blocks)
 
 void *heap_block_to_adress(struct heap *heap, uint32_t block)
 {
-    return heap->saddr + (block * HEAP_BLOCK_SIZE);
+   return (uint8_t*)heap->saddr + (block * HEAP_BLOCK_SIZE);
+// return heap->saddr + (block * HEAP_BLOCK_SIZE);
 }
 
 void heap_mark_blocks_taken(struct heap *heap, int start_block, int total_blocks)
@@ -197,7 +194,9 @@ void heap_mark_blocks_free(struct heap *heap, int starting_block)
 
 int heap_address_to_block(struct heap *heap, void *address)
 {
-    return ((int)(address - heap->saddr) / HEAP_BLOCK_SIZE);
+ return ((int)((uint8_t*)address - (uint8_t*)heap->saddr) /
+        HEAP_BLOCK_SIZE);   
+//return ((int)(address - heap->saddr) / HEAP_BLOCK_SIZE);
 }
 
 void *heap_malloc(struct heap *heap, size_t size)

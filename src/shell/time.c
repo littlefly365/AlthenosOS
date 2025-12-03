@@ -29,7 +29,7 @@
 #define CMOS_STATUS_D 0x0d
 #define CMOS_RESET_CODE 0x0f
 
-uint8_t get_update_in_progress_flag()
+uint8_t get_update_in_progress_flag(void)
 {
     output_bytes(RTCaddress, 0x0A);
     return (input_bytes(RTCdata) & 0x80);
@@ -41,7 +41,7 @@ uint32_t get_RTC_register(uint8_t reg)
     return input_bytes(RTCdata);
 }
 
-void datetime()
+void datetime(void)
 {
     uint32_t seconds;
     uint32_t minutes;
@@ -118,7 +118,7 @@ start:
     printk("%s\n", current_datetime);
 }
 
-void date()
+void date(void)
 {
     uint32_t day;
     uint32_t month;
@@ -170,7 +170,7 @@ start:
     printk("%s\n", current_date);
 }
 
-void clock()
+void clock(void)
 {
     uint32_t seconds;
     uint32_t minutes;
@@ -235,7 +235,7 @@ start:
     printk("%s\n", current_time);
 }
 
-uint32_t current_seconds()
+uint32_t current_seconds(void)
 {
     uint32_t seconds;
     uint32_t year;
@@ -276,7 +276,7 @@ start:
     return seconds;
 }
 
-uint32_t current_minutes()
+uint32_t current_minutes(void)
 {
     uint32_t minutes;
     uint32_t year;
@@ -318,7 +318,7 @@ start:
     return minutes;
 }
 
-uint32_t current_hour()
+uint32_t current_hour(void)
 {
     uint32_t hours;
     uint32_t year;
@@ -367,7 +367,7 @@ start:
     return hours;
 }
 
-uint32_t current_day()
+uint32_t current_day(void)
 {
     uint32_t day;
     uint32_t year;
@@ -409,7 +409,7 @@ start:
     return day;
 }
 
-uint32_t current_month()
+uint32_t current_month(void)
 {
     uint32_t month;
     uint32_t year;
@@ -451,7 +451,7 @@ start:
     return month;
 }
 
-uint32_t current_year()
+uint32_t current_year(void)
 {
     uint32_t year;
     uint32_t registerB;

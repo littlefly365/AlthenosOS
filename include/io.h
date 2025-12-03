@@ -29,8 +29,8 @@
 /* Check if bit n in flags is set */
 #define check_flag(flags, n) ((flags)&bit(n))
 
-void reboot();
-void shutdown();
+void reboot(void);
+void shutdown(void);
 uint8_t input_bytes(uint16_t port);
 void output_bytes(uint16_t port, uint8_t val);
 uint8_t inw(uint16_t port);

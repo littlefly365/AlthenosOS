@@ -10,7 +10,6 @@
 #include "../include/sha224.h"
 #include "../include/sha256.h"
 #include "../include/utils.h"
-#include "../include/easter.h"
 #include "../include/sleep.h"
 #include "../include/thread.h"
 #include "../include/memory.h"
@@ -18,6 +17,11 @@
 #include "../include/calculator.h"
 #include "../include/reader.h"
 #include "../include/globals.h"
+#include "../include/ramfs.h"
+#include "../include/unix.h"
+
+extern uint8_t initrd_start;
+extern uint8_t initrd_end;
 
 #define DEBUG false
 
@@ -29,7 +33,6 @@ uint8_t scrolllock = false;
 uint8_t shift = false;
 char current_version[7];
 
-
 char buffer[BUFFER_SIZE];
 char *string;
 char *buff;
@@ -38,11 +41,10 @@ node_t *head = NULL;
 
 int kmain(void)
 {
-
 	terminal_initialize(default_font_color, COLOR_BLACK);
 	terminal_set_colors(COLOR_LIGHT_BLUE, COLOR_BLACK);
 	sprintf(current_version, "%u.%u.%u", V1, V2, V3 + 1);
-//	print_logo();
+	print_logo();
 	about(current_version);
 	printk("\n\tType \"help\" for a list of commands.\n\n");
 	printk("\n\tWelcome!\n\n");
@@ -80,7 +82,7 @@ int kmain(void)
 	print_prompt();
 	while (true)
 	{
-		while (byte = scan())
+		while ((byte = scan()))
 		{
 			if (byte == ENTER)
 			{	
@@ -100,7 +102,7 @@ int kmain(void)
 			else if (byte == BACKSPACE)
 			{
 				char c = normalmap[byte];
-				char *s;
+				char *s = NULL;
 				s = ctos(s, c);
 				printk("%s", s);
 				buffer[strlen(buffer) - 1] = '\0';
@@ -108,7 +110,7 @@ int kmain(void)
 			else
 			{
 				char c1 = togglecode[byte];
-				char c2 = shiftcode[byte];
+			//	char c2 = shiftcode[byte];
 				char c;
 				if (c1 == CAPSLOCK)
 				{
@@ -134,7 +136,7 @@ int kmain(void)
 				{
 					c = normalmap[byte];
 				}
-				char *s;
+				char *s = NULL;
 				s = ctos(s, c);
 				printk("%s", s);
 				strcpy(&buffer[strlen(buffer)], s);

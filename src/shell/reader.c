@@ -10,7 +10,6 @@
 #include "../include/sha224.h"
 #include "../include/sha256.h"
 #include "../include/utils.h"
-#include "../include/easter.h"
 #include "../include/sleep.h"
 #include "../include/thread.h"
 #include "../include/memory.h"
@@ -18,9 +17,19 @@
 #include "../include/calculator.h"
 #include "../include/reader.h"
 #include "../include/globals.h"
+#include "../include/unix.h"
 
+void for_use(const char *cmd)
+{
+(void)cmd;   // for a clean build
+}
+		
+void commands_reader(void){
+				    char *cmd = NULL;
+        			char *arg = NULL;
 
-void commands_reader(){
+        			cmd = strtok(buffer, " ");
+       	 			arg = strtok(NULL, "");   
 
 
 				if (strlen(buffer) > 0 && strcmp(buffer, "exit") == 0)
@@ -132,8 +141,16 @@ void commands_reader(){
 				}
 				else if (strlen(buffer) > 0 && strcmp(buffer, "history") == 0)
 				{             
-                print_history(head);
+ 			                print_history(head);
 				}
+				else if (strlen(buffer) > 0 && strcmp(buffer, "ls") == 0)
+                                {
+          				cmd_ls();
+                                }
+				else if (strlen(buffer) > 0 && strcmp(buffer, "echo") == 0)
+                                {
+                                        cmd_echo(arg);
+                                }
 				else if (strlen(buffer) > 0 && (strstr(buffer, "+") != NULL || strstr(buffer, "-") != NULL || strstr(buffer, "*") != NULL|| strstr(buffer, "/") != NULL ))
 				{
 					compute(buffer);
@@ -141,7 +158,9 @@ void commands_reader(){
 				else
 				{
 					printk("\n'%s' is not a recognized command. ", buffer);
-				}                 
+				}  
+				
+               for_use(cmd);
             }
 
 

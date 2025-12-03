@@ -8,11 +8,12 @@
 #define EINVARG 2
 #define ENOMEM 3
 
+#define HEAP_BLOCK_HAS_NEXT 0x80
+#define HEAP_BLOCK_IS_FIRST 0x40
+
 #define HEAP_BLOCK_TABLE_ENTRY_TAKEN 0x01
 #define HEAP_BLOCK_TABLE_ENTRY_FREE 0x00
 
-#define HEAP_BLOCK_HAS_NEXT 0b10000000
-#define HEAP_BLOCK_IS_FIRST 0b01000000
 #define HEAP_ADDRESS 0x01000000
 #define HEAP_TABLE_ADRESS 0x00007E00
 
@@ -39,7 +40,7 @@ struct heap
 static struct heap kernel_heap;
 static struct heap_table kernel_heap_table;
 
-void heap_init();
+void heap_init(void);
 int heap_create(struct heap *heap, void *ptr, void *end, struct heap_table *table);
 void memcpy(void *dest, void *src, size_t n);
 void *heap_malloc(struct heap *heap, size_t size);

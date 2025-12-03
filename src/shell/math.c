@@ -73,7 +73,7 @@ double abs(double x)
 // https://stackoverflow.com/questions/47025373/fastest-implementation-of-the-natural-exponential-function-using-sse
 double exp(double x) // quartic spline approximation
 {
-    static uint32_t it = 0;
+  //  static uint32_t it = 0;
     union
     {
         float f;
@@ -167,48 +167,6 @@ double ln(double y)
     return result;
 }
 
-// double pow(double x, double y)
-// {
-//     return exp(y * ln(x));
-// }
-
-// double pow(double x, double y)
-// {
-//     uint32_t j;
-//     uint32_t it2 = 3; // num of iterations Newton-Raphson
-//     uint32_t it = 14;
-//     uint32_t i;
-//     double result = 0;
-
-//     double coeffs[14] = {1.0,
-//                          1.0,
-//                          0.5,
-//                          0.16666666666666666,
-//                          0.041666666666666664,
-//                          0.008333333333333333,
-//                          0.001388888888888889,
-//                          0.0001984126984126984,
-//                          2.48015873015873e-05,
-//                          2.7557319223985893e-06,
-//                          2.755731922398589e-07,
-//                          2.505210838544172e-08,
-//                          2.08767569878681e-09,
-//                          1.6059043836821613e-10};
-
-//     for (i = 0; i < 14; i++)
-//     {
-//         result += ipow(y, i) * ipow(ln(x), i) * coeffs[i];
-//     }
-
-//     for (j = 0; j < it2; j++)
-//     {
-//         result = result * (2 - result * exp(-y * ln(x)));
-//     }
-
-//     return result;
-// }
-
-// https://stackoverflow.com/questions/29860973/grokkable-algorithm-to-understand-exponentiation-where-the-exponent-is-floatin
 double pow(double x, double y)
 {
     if (x < 0 && abs((float)y - y) < EPS)
@@ -296,7 +254,7 @@ double sin_1st_quadrant(double x)
 
 double sin(double x)
 {
-    uint32_t n;
+//    uint32_t n;
     double result = 0;
     boolean isNegative = false;
     if (x < 0)

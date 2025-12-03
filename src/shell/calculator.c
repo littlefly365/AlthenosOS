@@ -14,7 +14,7 @@ void calc_push(double val) {
     calc_stack[++calc_top] = val;
 }
 
-double calc_pop() {
+double calc_pop(void) {
     if(calc_top < 0) {
         printk("Stack underflow\n");
         return 0.0;
@@ -22,15 +22,16 @@ double calc_pop() {
     return calc_stack[calc_top--];
 }
 
+    int isdigit(char c)
+{
+    return (c >= '0' && c <= '9');
+}
+
 void compute(char *buffer) {
     char *token;
     double a, b;
     char symbol;
     
-    int isdigit(char c)
-{
-    return (c >= '0' && c <= '9');
-}
 
     /* Tokenize the string buffer into an array of strings */
     token = strtok(buffer, " ");

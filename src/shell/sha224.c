@@ -37,7 +37,7 @@ void sha224(char *message)
         0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
     int i, j = 0;
-    unsigned char aux[SIZE][4];
+//    unsigned char aux[SIZE][4];
     uint32_t WORD[SIZE];
     uint32_t w[SIZE];
 
@@ -56,7 +56,7 @@ void sha224(char *message)
     // Step 2 - pad data with zeros
 
     // Step 3 - append a single bit
-    WORD[j] = 0b10000000;
+    WORD[j] = 0x80;
 
     // Step 4 - append length of message at the end
     WORD[SIZE - 1] = strlen(message) * sizeof(char) * 8;
@@ -122,7 +122,7 @@ void sha224(char *message)
     h7 = (h7 + h) % _2E32;
 
     // Final step - concatenate
-    unsigned char digest[256];
+    char digest[256];
     sprintf(digest, "%x%x%x%x%x%x%x", h0, h1, h2, h3, h4, h5, h6);
     printk("\n%s", digest);
 }
