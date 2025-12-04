@@ -33,6 +33,7 @@
 
   <h2>💿 Generating the ISO</h2>
   <pre><code>make clean && make</code></pre>
+  (or run clean.sh, build.sh, and iso.sh)
   <p>(You can modify options in the Makefile and build scripts according to your preferences.)</p>
 
   <h2>🖥 Testing with QEMU</h2>
