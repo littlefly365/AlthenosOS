@@ -27,8 +27,8 @@
   <ul>
     <li>xorriso</li>
     <li>mtools</li>
-    <li>clang(or gcc with -m32 support</li>
-    <li>ld / binutils-i386</li>
+    <li>clang</li>
+    <li>ld </li>
   </ul>
 
   <h2>💿 Generating the ISO</h2>
