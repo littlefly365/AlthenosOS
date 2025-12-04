@@ -91,8 +91,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>Clean and reorganize code for future versions</td><td>📅 En progreso</td></tr>
-      <tr><td>Reorganize shell and UNIX-style commands (search PATH)</td><td>⛔️ Not done</td></tr>
+      <tr><td>Clean and reorganize code for future versions</td><td>📅 In progress</td></tr>
+      <tr><td>Reorganize shell and UNIX-style commands (search PATH)</td><td>📅 In progress/td></tr>
       <tr><td>Separate user space and add exclusive root space</td><td>⛔️ Not done</td></tr>
       <tr><td>Unify kernel (memory and critical functions)</td><td>⛔️ Not done</td></tr>
       <tr><td>Rewrite critical parts using other languages (Rust, C, C++, Assembly, Python, Lumra, Shell)</td><td>⛔️ Not done</td></tr>
@@ -109,8 +109,8 @@
       <tr><td>Self-compilable system</td><td>⛔️ Not done</td></tr>
       <tr><td>Separate kernel from OS (update individually)</td><td>⛔️ Not done</td></tr>
       <tr><td>Custom bootloader (BSD/Minix style)</td><td>⛔️ Not done</td></tr>
-      <tr><td>Remove all GNU tools from AlthenosOS</td><td>⛔️ Not done</td></tr>
-      <tr><td>Rewrite Primus-OS code for GPL → BSD migration</td><td>📅 En progreso</td></tr>
+      <tr><td>Remove all GNU tools from AlthenosOS</td><td>📅 In progress</td></tr>
+      <tr><td>Rewrite Primus-OS code for GPL → BSD migration</td><td>📅 In progress</td></tr>
     </tbody>
   </table>
 
