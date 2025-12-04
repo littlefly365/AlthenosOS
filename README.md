@@ -92,7 +92,7 @@
     </thead>
     <tbody>
       <tr><td>Clean and reorganize code for future versions</td><td>📅 In progress</td></tr>
-      <tr><td>Reorganize shell and UNIX-style commands (search PATH)</td><td>📅 In progress/td></tr>
+      <tr><td>Reorganize shell and UNIX-style commands (search PATH)</td><td>📅 In progress</td></tr>
       <tr><td>Separate user space and add exclusive root space</td><td>⛔️ Not done</td></tr>
       <tr><td>Unify kernel (memory and critical functions)</td><td>⛔️ Not done</td></tr>
       <tr><td>Rewrite critical parts using other languages (Rust, C, C++, Assembly, Python, Lumra, Shell)</td><td>⛔️ Not done</td></tr>
