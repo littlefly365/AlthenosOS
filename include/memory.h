@@ -1,3 +1,12 @@
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
 #ifndef _MEMORY_H
 #define _MEMORY_H 1
 
@@ -17,9 +26,7 @@
 #define HEAP_ADDRESS 0x01000000
 #define HEAP_TABLE_ADRESS 0x00007E00
 
-// 100 MB heap size
 #define HEAP_SIZE_BYTES 1024 * 1024 * 100
-// 4 kb block size
 #define HEAP_BLOCK_SIZE 4096
 
 typedef unsigned char HEAP_BLOCK_TABLE_ENTRY;
@@ -33,7 +40,6 @@ struct heap_table
 struct heap
 {
     struct heap_table *table;
-    // start address of the heap data pool
     void *saddr;
 };
 

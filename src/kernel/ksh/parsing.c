@@ -1,8 +1,17 @@
-#include "../include/parsing.h"
-#include "../include/string.h"
-#include "../include/limits.h"
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+#include <parsing.h>
+#include <string.h>
+#include <limits.h>
 
-#include "stdint.h"
+#include <stdint.h>
 
 uint32_t parse_int(char *string, char c)
 {

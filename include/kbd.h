@@ -1,6 +1,15 @@
-#define KBSTATP 0x64 // kbd controller status port(I)
-#define KBS_DIB 0x01 // kbd data in buffer
-#define KBDATAP 0x60 // kbd data port(I)
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+#define KBSTATP 0x64 
+#define KBS_DIB 0x01 
+#define KBDATAP 0x60
 #define BACKSPACE 0x0E
 #define ENTER 0x1c
 #define NO 0
@@ -12,7 +21,7 @@
 #define SCROLLLOCK (1 << 5)
 #define E0ESC (1 << 6)
 
-// Special keycodes
+
 #define KEY_HOME 0xE0
 #define KEY_END 0xE1
 #define KEY_UP 0xE2
@@ -24,7 +33,6 @@
 #define KEY_INS 0xE8
 #define KEY_DEL 0xE9
 
-// C('A') == Control-A
 #define C(x) (x - '@')
 
 static char shiftcode[256] =
@@ -44,19 +52,19 @@ static char togglecode[256] =
 
 static char normalmap[256] =
     {
-        NO, 0x1B, '1', '2', '3', '4', '5', '6', // 0x00
+        NO, 0x1B, '1', '2', '3', '4', '5', '6', 
         '7', '8', '9', '0', '-', '=', '\b', '\t',
-        'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', // 0x10
+        'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 
         'o', 'p', '[', ']', '\n', NO, 'a', 's',
-        'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', // 0x20
+        'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
         '\'', '`', NO, '\\', 'z', 'x', 'c', 'v',
-        'b', 'n', 'm', ',', '.', '/', NO, '*', // 0x30
+        'b', 'n', 'm', ',', '.', '/', NO, '*', 
         NO, ' ', NO, NO, NO, NO, NO, NO,
-        NO, NO, NO, NO, NO, NO, NO, '7', // 0x40
+        NO, NO, NO, NO, NO, NO, NO, '7', 
         '8', '9', '-', '4', '5', '6', '+', '1',
-        '2', '3', '0', '.', NO, NO, NO, NO, // 0x50
-        [0x9C] = '\n',                        // KP_Enter
-        [0xB5] = '/',                         // KP_Div
+        '2', '3', '0', '.', NO, NO, NO, NO, 
+        [0x9C] = '\n',                        
+        [0xB5] = '/',                         
         [0xC8] = KEY_UP, [0xD0] = KEY_DN,
         [0xC9] = KEY_PGUP, [0xD1] = KEY_PGDN,
         [0xCB] = KEY_LF, [0xCD] = KEY_RT,
@@ -65,19 +73,19 @@ static char normalmap[256] =
 
 static char capslockmap[256] =
     {
-        NO, 0x1B, '1', '2', '3', '4', '5', '6', // 0x00
+        NO, 0x1B, '1', '2', '3', '4', '5', '6', 
         '7', '8', '9', '0', '-', '=', '\b', '\t',
-        'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', // 0x10
+        'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I',
         'O', 'P', '{', '}', '\n', NO, 'A', 'S',
-        'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', // 0x20
+        'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', 
         '\'', '`', NO, '\\', 'Z', 'X', 'C', 'V',
-        'B', 'N', 'M', ',', '.', '/', NO, '*', // 0x30
+        'B', 'N', 'M', ',', '.', '/', NO, '*',
         NO, ' ', NO, NO, NO, NO, NO, NO,
-        NO, NO, NO, NO, NO, NO, NO, '7', // 0x40
+        NO, NO, NO, NO, NO, NO, NO, '7', 
         '8', '9', '-', '4', '5', '6', '+', '1',
-        '2', '3', '0', '.', NO, NO, NO, NO, // 0x50
-        [0x9C] = '\n',                        // KP_Enter
-        [0xB5] = '/',                         // KP_Div
+        '2', '3', '0', '.', NO, NO, NO, NO, 
+        [0x9C] = '\n',                        
+        [0xB5] = '/',                         
         [0xC8] = KEY_UP,
         [0xD0] = KEY_DN,
         [0xC9] = KEY_PGUP,
@@ -91,19 +99,19 @@ static char capslockmap[256] =
 
 static char shiftmap[256] =
     {
-        NO, 033, '!', '@', '#', '$', '%', '^', // 0x00
+        NO, 033, '!', '@', '#', '$', '%', '^', 
         '&', '*', '(', ')', '_', '+', '\b', '\t',
-        'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', // 0x10
+        'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I',
         'O', 'P', '{', '}', '\n', NO, 'A', 'S',
-        'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', // 0x20
+        'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', 
         '"', '~', NO, '|', 'Z', 'X', 'C', 'V',
-        'B', 'N', 'M', '<', '>', '?', NO, '*', // 0x30
+        'B', 'N', 'M', '<', '>', '?', NO, '*', 
         NO, ' ', NO, NO, NO, NO, NO, NO,
-        NO, NO, NO, NO, NO, NO, NO, '7', // 0x40
+        NO, NO, NO, NO, NO, NO, NO, '7', 
         '8', '9', '-', '4', '5', '6', '+', '1',
-        '2', '3', '0', '.', NO, NO, NO, NO, // 0x50
-        [0x9C] = '\n',                        // KP_Enter
-        [0xB5] = '/',                         // KP_Div
+        '2', '3', '0', '.', NO, NO, NO, NO, 
+        [0x9C] = '\n',                        
+        [0xB5] = '/',                         
         [0xC8] = KEY_UP,
         [0xD0] = KEY_DN,
         [0xC9] = KEY_PGUP,
@@ -124,8 +132,8 @@ static char ctlmap[256] =
         C('D'), C('F'), C('G'), C('H'), C('J'), C('K'), C('L'), NO,
         NO, NO, NO, C('\\'), C('Z'), C('X'), C('C'), C('V'),
         C('B'), C('N'), C('M'), NO, NO, C('/'), NO, NO,
-        [0x9C] = '\r',   // KP_Enter
-        [0xB5] = C('/'), // KP_Div
+        [0x9C] = '\r',  
+        [0xB5] = C('/'), 
         [0xC8] = KEY_UP, [0xD0] = KEY_DN,
         [0xC9] = KEY_PGUP, [0xD1] = KEY_PGDN,
         [0xCB] = KEY_LF, [0xCD] = KEY_RT,

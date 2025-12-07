@@ -1,24 +1,33 @@
-#include "../include/string.h"
-#include "../include/limits.h"
-#include "../include/bool.h"
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+#include <string.h>
+#include <limits.h>
+#include <bool.h>
 
-#include "stdarg.h"
-#include "stdint.h"
+#include <stdarg.h>
+#include <stdint.h>
 
 #define MAX_PRECISION (10)
 static const double rounders[MAX_PRECISION + 1] =
     {
-        0.5,          // 0
-        0.05,         // 1
-        0.005,        // 2
-        0.0005,       // 3
-        0.00005,      // 4
-        0.000005,     // 5
-        0.0000005,    // 6
-        0.00000005,   // 7
-        0.000000005,  // 8
-        0.0000000005, // 9
-        0.00000000005 // 10
+        0.5,          
+        0.05,         
+        0.005,        
+        0.0005,       
+        0.00005,      
+        0.000005,     
+        0.0000005,    
+        0.00000005,   
+        0.000000005,  
+        0.0000000005, 
+        0.00000000005 
 };
 
 char *ctos(char s[2], const char c)
@@ -153,7 +162,7 @@ char *toupper(char *string)
 {
     for (char *p = string; *p != '\0'; p++)
     {
-        if (*p >= 'a' && *p <= 'z') // Only if it's a lower letter
+        if (*p >= 'a' && *p <= 'z')
             *p -= 32;
     }
     return string;
@@ -163,7 +172,7 @@ char *tolower(char *string)
 {
     for (char *p = string; *p != '\0'; p++)
     {
-        if (*p >= 'A' && *p <= 'Z') // Only if it's a lower letter
+        if (*p >= 'A' && *p <= 'Z')
             *p += 32;
     }
     return string;
@@ -209,19 +218,15 @@ char *ftoa(char *buf, float f, int precision)
     char *p1;
     char c;
     uint32_t intPart;
-
-    // check precision bounds
     if (precision > MAX_PRECISION)
         precision = MAX_PRECISION;
-
-    // sign stuff
     if (f < 0)
     {
         f = -f;
         *ptr++ = '-';
     }
 
-    if (precision < 0) // negative precision == automatic precision guess
+    if (precision < 0)
     {
         if (f < 1.0)
             precision = 6;
@@ -238,12 +243,8 @@ char *ftoa(char *buf, float f, int precision)
         else
             precision = 0;
     }
-
-    // round value according the precision
     if (precision)
         f += rounders[precision];
-
-    // integer part...
     intPart = f;
     f -= intPart;
 
@@ -251,38 +252,25 @@ char *ftoa(char *buf, float f, int precision)
         *ptr++ = '0';
     else
     {
-        // save start pointer
         p = ptr;
-
-        // convert (reverse order)
         while (intPart)
         {
             *p++ = '0' + intPart % 10;
             intPart /= 10;
         }
-
-        // save end pos
         p1 = p;
-
-        // reverse result
         while (p > ptr)
         {
             c = *--p;
             *p = *ptr;
             *ptr++ = c;
         }
-
-        // restore end pos
         ptr = p1;
     }
 
-    // decimal part
     if (precision)
     {
-        // place decimal point
         *ptr++ = '.';
-
-        // convert
         while (precision--)
         {
             f *= 10.0;
@@ -291,8 +279,6 @@ char *ftoa(char *buf, float f, int precision)
             f -= c;
         }
     }
-
-    // terminating zero
     *ptr = 0;
 
     return buf;
@@ -353,7 +339,7 @@ int vsprintf(char *buf, const char *fmt, va_list va)
             break;
         case 'm':;
             const uint8_t *m = va_arg(va, const uint8_t *);
-            width = min(width, 64); // buffer limited to 256!
+            width = min(width, 64);
             if (m)
                 for (;;)
                 {
@@ -366,7 +352,6 @@ int vsprintf(char *buf, const char *fmt, va_list va)
         case '0':
             if (!width)
                 flags |= FILL_ZERO;
-            // fall through
         case '1':
 		case '2':
 		case '3':
@@ -407,22 +392,18 @@ uint32_t atoi(const char *str)
 {
     uint32_t sign = 1, base = 0, i = 0;
 
-    // if whitespaces then ignore.
     while (str[i] == ' ')
     {
         i++;
     }
 
-    // sign of number
     if (str[i] == '-' || str[i] == '+')
     {
         sign = 1 - 2 * (str[i++] == '-');
     }
 
-    // checking for valid input
     while (str[i] >= '0' && str[i] <= '9')
     {
-        // handling overflow test case
         if (base > INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7))
         {
             if (sign == 1)
@@ -469,7 +450,6 @@ double atof(char *str)
         return val;
 }
 
-/* A utility function to reverse a string  */
 void reverse(char str[], int length)
 {
     int start = 0;
@@ -482,28 +462,22 @@ void reverse(char str[], int length)
     }
 }
 
-// Implementation of itoa()
 void itoa(char *str, int num, int base)
 {
     int i = 0;
     boolean isNegative = false;
-
-    /* Handle 0 explicitly, otherwise empty string is printed for 0 */
     if (num == 0)
     {
         str[i++] = '0';
         str[i] = '\0';
     }
 
-    // In standard itoa(), negative numbers are handled only with
-    // base 10. Otherwise numbers are considered unsigned.
     if (num < 0 && base == 10)
     {
         isNegative = true;
         num = -num;
     }
 
-    // Process individual digits
     while (num != 0)
     {
         int rem = num % base;
@@ -511,13 +485,10 @@ void itoa(char *str, int num, int base)
         num = num / base;
     }
 
-    // If number is negative, append '-'
     if (isNegative)
         str[i++] = '-';
 
-    str[i] = '\0'; // Append string terminator
-
-    // Reverse the string
+    str[i] = '\0';
     reverse(str, i);
 }
 

@@ -1,7 +1,16 @@
-#include "../include/string.h"
-#include "../include/ramfs.h"
-#include "../include/tty.h"
-#include "../include/mencpy.h"
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+#include <string.h>
+#include <ramfs.h>
+#include <tty.h>
+#include <memory.h>
 
 static ramfs_file_t files[128];
 static uint32_t file_count = 0;
@@ -71,7 +80,7 @@ int ramfs_read(const char *name, char *buffer, uint32_t bufsize) {
     if (bufsize < f->size)
         return -2;
 
-    mempy(buffer, f->data, f->size);
+    memcpy(buffer, f->data, f->size);
     return f->size;
 }
 

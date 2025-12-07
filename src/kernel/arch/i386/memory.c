@@ -1,14 +1,20 @@
-#include "../include/memory.h"
-#include "../include/string.h"
-#include "../../../include/tty.h"
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+#include <memory.h>
+#include <string.h>
+#include <tty.h>
 
 void memcpy(void *dest, void *src, size_t n)
 {
-    // Typecast src and dest addresses to (char *)
     char *csrc = (char *)src;
     char *cdest = (char *)dest;
-
-    // Copy contents of src[] to dest[]
     for (unsigned int i = 0; i < n; i++)
         cdest[i] = csrc[i];
 }
@@ -109,7 +115,6 @@ int heap_get_start_block(struct heap *heap, uint32_t total_blocks)
             bs = -1;
             continue;
         }
-        // first block
         if (bs == -1)
         {
             bs = i;
@@ -131,7 +136,6 @@ int heap_get_start_block(struct heap *heap, uint32_t total_blocks)
 void *heap_block_to_adress(struct heap *heap, uint32_t block)
 {
    return (uint8_t*)heap->saddr + (block * HEAP_BLOCK_SIZE);
-// return heap->saddr + (block * HEAP_BLOCK_SIZE);
 }
 
 void heap_mark_blocks_taken(struct heap *heap, int start_block, int total_blocks)
@@ -196,7 +200,6 @@ int heap_address_to_block(struct heap *heap, void *address)
 {
  return ((int)((uint8_t*)address - (uint8_t*)heap->saddr) /
         HEAP_BLOCK_SIZE);   
-//return ((int)(address - heap->saddr) / HEAP_BLOCK_SIZE);
 }
 
 void *heap_malloc(struct heap *heap, size_t size)

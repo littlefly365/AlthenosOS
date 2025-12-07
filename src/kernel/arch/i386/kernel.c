@@ -1,61 +1,55 @@
-#include "../include/version.h"
-#include "../include/tty.h"
-#include "../include/io.h"
-#include "../include/kbd.h"
-#include "../include/string.h"
-#include "../include/time.h"
-#include "../include/math_shell.h"
-#include "../include/parsing.h"
-#include "../include/bool.h"
-#include "../include/sha224.h"
-#include "../include/sha256.h"
-#include "../include/utils.h"
-#include "../include/sleep.h"
-#include "../include/thread.h"
-#include "../include/memory.h"
-#include "../include/shell_history.h"
-#include "../include/calculator.h"
-#include "../include/reader.h"
-#include "../include/globals.h"
-#include "../include/ramfs.h"
-#include "../include/unix.h"
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+
+#include <tty.h>
+#include <io.h>
+#include <kbd.h>
+#include <string.h>
+#include <bool.h>
+#include <memory.h>
+#include <thread.h>
+#include <shell_history.h>
+#include <reader.h>
+#include <globals.h>
+#include <ramfs.h>
+#include <version.h>
 
 extern uint8_t initrd_start;
 extern uint8_t initrd_end;
 
 #define DEBUG false
 
-#define BUFFER_SIZE 1024
-
 uint8_t numlock = true;
 uint8_t capslock = false;
 uint8_t scrolllock = false;
 uint8_t shift = false;
-char current_version[7];
 
 char buffer[BUFFER_SIZE];
 char *string;
 char *buff;
 uint8_t byte;
 node_t *head = NULL;
+char os_version[7];
+
 
 int kmain(void)
 {
 	terminal_initialize(default_font_color, COLOR_BLACK);
 	terminal_set_colors(COLOR_LIGHT_BLUE, COLOR_BLACK);
-	sprintf(current_version, "%u.%u.%u", V1, V2, V3 + 1);
-	print_logo();
-	about(current_version);
-	printk("\n\tType \"help\" for a list of commands.\n\n");
-	printk("\n\tWelcome!\n\n");
-
 	terminal_set_colors(default_font_color, COLOR_BLACK);
-
-	// initialize heap
 	heap_init();
+	sprintf(os_version, "%u.%u.%u", OV1, OV2, OV3);
+
+
 
 #if DEBUG
-	// memory test
 	int *a = (int *)kmalloc(sizeof(int));
 	void *b = kmalloc(5000);
 	void *c = kmalloc(50000);
@@ -64,22 +58,13 @@ int kmain(void)
 	printf("\na: %p", (void *)a);
 	printf("\nb: %p", (void *)b);
 	printf("\nc: %p", (void *)c);
-	// int *b = (int *)kmalloc(0x1000);
-	// int *c = (int *)kmalloc(sizeof(int));
-	// printf("\nb: %x", b);
-	// printf("\nc: %x", c);
-	// kfree(b);
-	// int *d = (int *)kmalloc(0x1000); // here should be adress of B
-	// printf("\nd: %x", d);
-	// kfree(d);
-	// kfree(c);
 	kfree(a);
 	kfree(b);
 	kfree(c);
 #endif
 
 	strcpy(&buffer[strlen(buffer)], "");
-	print_prompt();
+    prompt();
 	while (true)
 	{
 		while ((byte = scan()))
@@ -90,7 +75,7 @@ int kmain(void)
 				insert_at_head(&head, create_new_node(buffer));
 
 				commands_reader();
-				print_prompt();
+				prompt();
 				memset(buffer, 0, BUFFER_SIZE);
 				strcpy(&buffer[strlen(buffer)], "");
 				break;
@@ -110,7 +95,6 @@ int kmain(void)
 			else
 			{
 				char c1 = togglecode[byte];
-			//	char c2 = shiftcode[byte];
 				char c;
 				if (c1 == CAPSLOCK)
 				{

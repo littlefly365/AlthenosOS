@@ -1,4 +1,4 @@
-#include "../include/shell_history.h"
+#include <shell_history.h>
 
 node_t *create_new_node(char buffer[BUFFER_SIZE])
 {

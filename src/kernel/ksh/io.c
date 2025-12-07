@@ -1,5 +1,14 @@
-#include "../include/io.h"
-#include "../include/tty.h"
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+#include <io.h>
+#include <tty.h>
 
 void shutdown(void)
 {
@@ -16,15 +25,15 @@ void reboot(void)
 
     do
     {
-        temp = input_bytes(KBRD_INTRFC); /* empty user data */
+        temp = input_bytes(KBRD_INTRFC);
         if (check_flag(temp, KBRD_BIT_KDATA) != 0)
-            input_bytes(KBRD_IO); /* empty keyboard data */
+            input_bytes(KBRD_IO); 
     } while (check_flag(temp, KBRD_BIT_UDATA) != 0);
 
-    output_bytes(KBRD_INTRFC, KBRD_RESET); /* pulse CPU reset line */
+    output_bytes(KBRD_INTRFC, KBRD_RESET); 
 loop:
-    __asm__ volatile("hlt"); /* if that didn't work, halt the CPU */
-    goto loop;           /* if a NMI is received, halt again */
+    __asm__ volatile("hlt"); 
+    goto loop;          
 }
 
 uint8_t input_bytes(uint16_t port)
@@ -63,7 +72,7 @@ uint8_t scan(void)
 {
     unsigned char brk;
     static uint8_t key = 0;
-    uint8_t read_char = input_bytes(0x60); // keyboard port
+    uint8_t read_char = input_bytes(0x60);
     brk = read_char & 0x80;
     read_char = read_char & 0x7f;
     if (brk)
@@ -91,6 +100,11 @@ void move_cursor(int row, int col)
 
 void print_prompt(void)
 {
-    printk("\n$ > ");
+    printk("\n[root@althenos ~]$ ");
+    move_cursor(get_terminal_row(), get_terminal_col());
+}
+void prompt(void)
+{
+    printk("[root@althenos ~]$ ");
     move_cursor(get_terminal_row(), get_terminal_col());
 }

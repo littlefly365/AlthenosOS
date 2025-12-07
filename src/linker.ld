@@ -1,3 +1,13 @@
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+
 ENTRY(loader)
 OUTPUT_FORMAT(elf32-i386)
 OUTPUT_ARCH(i386:i386)
@@ -29,9 +39,6 @@ SECTIONS
     *(COMMON)
   }
 
-  /* ----------------------------- */
-  /* INITRD embebido en el kernel */
-  /* ----------------------------- */
   .initrd ALIGN(4096) :
   {
       initrd_start = .;

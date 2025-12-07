@@ -1,8 +1,18 @@
-#include "../include/tty.h"
-#include "../include/string.h"
-#include "../include/io.h"
-#include "../include/bool.h"
-#include "../include/kbd.h"
+/*
+ * -------------------------------------------------------------------------
+ *                                 AlthenosOS
+ *  (c) 2025-2026 littlefly365
+ *  This project is under the GPL v3 license.
+ *  You should receive the license with the source code. If not - check:
+ *  https://github.com/littlefly365/AlthenosOS/blob/main/LICENSE.md
+ * -------------------------------------------------------------------------
+ */
+#include <tty.h>
+#include <string.h>
+#include <io.h>
+#include <bool.h>
+#include <kbd.h>
+#include <vga.h>
 
 size_t terminal_row;
 size_t terminal_column;
@@ -48,7 +58,6 @@ void terminal_scroll(void)
     unsigned int i;
     for (i = 0; i < VGA_HEIGHT; i++)
     {
-        //int m;
         for (unsigned int m = 0; m < VGA_WIDTH; m++)
         {
             terminal_buffer[i * VGA_WIDTH + m] = terminal_buffer[(i + 1) * VGA_WIDTH + m];
@@ -112,55 +121,35 @@ int putchar(int ic)
 
 void term_putc(char c, enum vga_color char_color)
 {
-  //  unsigned int i = 0; // place holder for text string position
-  //  unsigned int j = 0; // place holder for video buffer position
-
     int index;
-    // Remember - we don't want to display ALL characters!
     switch (c)
     {
-    case '\n': // Newline characters should return the column to 0, and increment the row
+    case '\n':
     {
         terminal_column = 0;
         terminal_row += 2;
         break;
     }
 
-    default: // Normal characters just get displayed and then increment the column
+    default: 
     {
-        index = (VGA_WIDTH * terminal_row) + terminal_column; // Like before, calculate the buffer index
+        index = (VGA_WIDTH * terminal_row) + terminal_column;
         VGA_MEMORY[index] = c;
         VGA_MEMORY[index + 1] = char_color;
-        // terminal_column += 2;
         break;
     }
     }
-
-    // What happens if we get past the last column? We need to reset the column to 0, and increment the row to get to a new line
     if (terminal_column >= VGA_WIDTH)
     {
         terminal_column = 0;
         terminal_row++;
     }
-
-    // What happens if we get past the last row? We need to reset both column and row to 0 in order to loop back to the top of the screen
     if (terminal_row >= VGA_WIDTH)
     {
         terminal_column = 0;
         terminal_row = 0;
     }
 }
-
-// This function prints an entire string onto the screen
-// void term_print(const char *str)
-// {
-//     int i;
-//     for (i = 0; str[i] != '\0'; i++)
-//     { // Keep placing characters until we hit the null-terminating character ('\0')
-//         term_putc(str[i]);
-//     }
-// }
-
 static void print(const char *data, size_t data_length)
 {
     size_t i;
@@ -190,14 +179,6 @@ int normalize(double *val)
 
 static void ftoa_fixed(char *buffer, double value)
 {
-    /* carry out a fixed conversion of a double value to a string, with a precision of 5 decimal digits.
-     * Values with absolute values less than 0.000001 are rounded to 0.0
-     * Note: this blindly assumes that the buffer will be large enough to hold the largest possible result.
-     * The largest value we expect is an IEEE 754 double precision real, with maximum magnitude of approximately
-     * e+308. The C standard requires an implementation to allow a single conversion to produce up to 512
-     * characters, so that's what we really expect as the buffer size.
-     */
-
     int exponent = 0;
     int places = 0;
     static const int width = 4;
@@ -319,7 +300,7 @@ int printk(const char *format, ...)
         if (*format == 'c')
         {
             format++;
-            char c = (char)va_arg(parameters, int /* char promotes to int */);
+            char c = (char)va_arg(parameters, int);
             print(&c, sizeof(c));
         }
         else if (*format == 'd')
@@ -389,17 +370,6 @@ int get_terminal_col(void)
 void terminal_set_colors(enum vga_color font_color, enum vga_color background_color)
 {
     terminal_color = make_color(font_color, background_color);
-    // terminal_buffer = VGA_MEMORY;
-    // size_t y;
-    // for (y = 0; y < VGA_HEIGHT; y++)
-    // {
-    //     size_t x;
-    //     for (x = 0; x < VGA_WIDTH; x++)
-    //     {
-    //         const size_t index = y * VGA_WIDTH + x;
-    //         terminal_buffer[index] = make_vgaentry('\0', terminal_color);
-    //     }
-    // }
 }
 
 void print_color_options(void)
@@ -551,4 +521,32 @@ enum vga_color change_font_color(void)
             move_cursor(get_terminal_row(), get_terminal_col());
         }
     }
+}
+
+void scroll(void) {
+    for (uint16_t row = 0; row < SCREEN_HEIGHT - 1; row++) {
+        for (uint16_t col = 0; col < SCREEN_WIDTH; col++) {
+            video_memory[row * SCREEN_WIDTH + col] = video_memory[(row + 1) * SCREEN_WIDTH + col];
+        }
+    }
+
+    for (uint16_t col = 0; col < SCREEN_WIDTH; col++) {
+        video_memory[(SCREEN_HEIGHT - 1) * SCREEN_WIDTH + col] = ' ' | (0x07 << 8);
+    }
+
+    cursor_pos = (SCREEN_HEIGHT - 1) * SCREEN_WIDTH;
+}
+
+void printc(char c, uint8_t color) {
+    if (c == '\n') {
+        cursor_pos += SCREEN_WIDTH - (cursor_pos % SCREEN_WIDTH);
+    } else {
+        video_memory[cursor_pos++] = (color << 8) | c;
+    }
+
+    if (cursor_pos >= SCREEN_WIDTH * SCREEN_HEIGHT) {
+        scroll();
+    }
+
+    update_cursor();
 }
