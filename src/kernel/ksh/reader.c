@@ -17,6 +17,7 @@
 #include <shell_history.h>
 #include <txx.h>
 #include <vga.h>
+#include <gui.h>
 
 void for_use(const char *cmd)
 {
