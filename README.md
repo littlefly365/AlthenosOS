@@ -105,7 +105,7 @@
     <tr><td>Self-compilable system</td><td>⛔️ Not done</td></tr>
     <tr><td>Separate kernel from OS (update individually)</td><td>⛔️ Not done</td></tr>
     <tr><td>Custom bootloader (BSD/Minix style)</td><td>⛔️ Not done</td></tr>
-    <tr><td>Remove all GNU tools from AlthenosOS building process</td><td>⛔️ Just finished (Now the only GNU tool required is GNU make and maybe bash)</td></tr>
+    <tr><td>Remove all GNU tools from AlthenosOS building process</td><td>📅 Just finished (Now the only GNU tool required is GNU make and maybe bash)</td></tr>
     <tr><td>Rewrite Primus-OS code for GPL → BSD migration</td><td>📅 In progress</td></tr>
   </tbody>
 </table>
