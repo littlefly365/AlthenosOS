@@ -42,7 +42,7 @@ char os_version[7];
 int kmain(void)
 {
 	terminal_initialize(default_font_color, COLOR_BLACK);
-	terminal_set_colors(COLOR_LIGHT_BLUE, COLOR_BLACK);
+	terminal_set_colors(COLOR_LIGHT_GREY, COLOR_BLACK);
 	terminal_set_colors(default_font_color, COLOR_BLACK);
 	heap_init();
 	sprintf(os_version, "%u.%u.%u", OV1, OV2, OV3);
